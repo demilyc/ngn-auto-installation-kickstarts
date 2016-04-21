@@ -19,7 +19,7 @@ rootpw --plaintext redhat
 #network --device=ens3 --bootproto=dhcp
 
 iscsiname iqn.2000-04.com.qlogic:qle4060c.gs40841a31566.1
-iscsi --ipaddr=10.73.64.13 --port=3260 --target=iqn.1986-03.com.ibm:2145.clusterv3700.node2 --iface=
+iscsi --ipaddr=10.73.64.13 --port=3260 --target=iqn.1986-03.com.ibm:2145.clusterv3700.node2
 
 clearpart --all
 autopart --type=thinp
