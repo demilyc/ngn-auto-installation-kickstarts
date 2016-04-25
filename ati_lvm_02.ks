@@ -3,7 +3,7 @@
 # 1. a unattended installation
 # 2. set volgroup name to `testgroup`
 # 3. set logvol /|/swap|/data
-# 4. set recommended enabled
+# 4. set grow and recommended enabled
 
 authconfig --enableshadow --passalgo=md5
 keyboard us
@@ -23,6 +23,6 @@ volgroup testgroup pv.01 pv.02
 
 logvol / --vgname=testgroup --size=8900 --name=root
 logvol swap --vgname=testgroup --recommended --name=swap
-logvol /data --vgname=testgroup --size=10000 --name=data
+logvol /data --vgname=testgroup --size=10000 --name=data --grow
 
 reboot
