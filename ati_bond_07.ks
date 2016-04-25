@@ -15,6 +15,7 @@ network --device=bond06 --bondslaves=ens3,ens4 --bondopts=mode=balance-alb,miimo
 clearpart --all
 autopart --type=thinp
 text
+user --name=node --password=123qweP --plaintext
 %post --erroronfail
 imgbase layout --init
 imgbase --experimental volume --create /var 4G
