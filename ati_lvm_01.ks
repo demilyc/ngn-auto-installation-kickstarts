@@ -2,7 +2,7 @@
 
 # 1. a unattended installation
 # 2. set volgroup name to `testgroup`
-# 3. set logvol /|/boot|/swap|/data
+# 3. set logvol /|/swap|/data
 
 authconfig --enableshadow --passalgo=md5
 keyboard us
@@ -21,7 +21,6 @@ part /boot --size=4300 --ondisk=/dev/sda
 volgroup testgroup pv.01 pv.02
 
 logvol / --vgname=testgroup --size=4300 --name=root
-#logvol /boot --vgname=testgroup --size=4300 --name=boot
 logvol swap --vgname=testgroup --size=1024 --name=swap
 logvol /data --vgname=testgroup --size=4300 --name=data
 
