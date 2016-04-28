@@ -3,7 +3,7 @@
 # 1. a unattended installation
 # 2. set volgroup name to `testgroup`
 # 3. set logvol /|/swap|/data
-# 4. set useexisting enabled
+# 4. set selinux to `disabled`
 
 authconfig --enableshadow --passalgo=md5
 keyboard us
