@@ -19,10 +19,11 @@ clearpart --list=/dev/sda1,/dev/mapper/testgroup-swap,/dev/mapper/testgroup-root
 part pv.01 --size=10000 --ondisk=/dev/sda
 part pv.02 --size=15000 --ondisk=/dev/sda
 part /boot --fstype=xfs --size=4300 --ondisk=/dev/sda
-volgroup testgroup pv.01 pv.02
+volgroup testgroup2 pv.01 pv.02
 
-logvol / --vgname=testgroup --size=6000 --name=root --fstype=ext3
-logvol swap --vgname=testgroup --size=2000 --name=swap
+logvol / --vgname=testgroup2 --size=6000 --name=root --fstype=ext3
+logvol swap --vgname=testgroup2 --size=2000 --name=swap
 logvol /data --vgname=testgroup --size=10000 --name=data --noformat
 
+text
 reboot
