@@ -1,0 +1,10 @@
+{
+	"liveimg": "",
+
+	"MACHINES": ["dell-per510-01-ipmi.lab.eng.pek2.redhat.com", ],
+	"CHECK_POINTS": [
+		{"CMD": "", "RESULT": ""},
+		{"CMD": "", "RESULT": ""}
+	],
+
+}
