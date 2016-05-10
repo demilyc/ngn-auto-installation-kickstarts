@@ -15,7 +15,7 @@ lang en_US
 #System time zone set
 timezone --utc Asia/Shanghai
 
-#Instal image url set
+#Install image url set
 liveimg --url=http://10.66.65.30/rhevh/ovirt-node-ng-image.squashfs.img
 
 #Bootloader location set
