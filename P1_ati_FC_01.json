@@ -1,7 +1,11 @@
 {
     "liveimg": "",
+    "srv_ip": "",
+    "srv_port": "",
+    "bkr_name": "",
+
     "MACHINES": [
-        "dell-per510-01-ipmi.lab.eng.pek2.redhat.com"
+        "dell-per510-01.lab.eng.pek2.redhat.com"
     ],
     "CHECK_POINTS": [
         {

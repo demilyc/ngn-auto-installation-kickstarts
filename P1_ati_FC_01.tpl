@@ -9,7 +9,7 @@ authconfig --enableshadow --passalgo=md5
 keyboard us
 lang en_US
 timezone --utc Asia/Shanghai
-liveimg --url=http://10.66.10.22:8090/rhevh/rhevh7-ng-36/rhev-hypervisor7-ng-3.6-20160506.0/rhev-hypervisor7-ng-3.6-20160506.0.x86_64.liveimg.squashfs
+liveimg --url={liveimg}
 
 bootloader --location=mbr
 rootpw --plaintext redhat
@@ -37,5 +37,5 @@ imgbase --experimental volume --create /var 4G
 %end
 
 %post --nochroot
-curl -s http://10.66.9.216:5000/done/dell-per510-01.lab.eng.pek2.redhat.com
+curl -s http://{srv_ip}:{srv_port}/done/{bkr_name}
 %end
