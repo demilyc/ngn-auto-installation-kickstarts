@@ -11,7 +11,7 @@ timezone --utc Asia/Shanghai
 liveimg --url=http://10.66.65.30/rhevh/ovirt-node-ng-image.squashfs.img
 bootloader --location=mbr
 rootpw --plaintext redhat
-network --device=bond01 --bondslaves=ens3,ens4 --bondopts="mode=active-backup miimon=1000" --bootproto=dhcp
+network --device=bond01 --bondslaves=em1,p4p2 --bondopts="mode=active-backup miimon=1000" --bootproto=dhcp
 clearpart --all
 autopart --type=thinp
 text
