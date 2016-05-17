@@ -8,11 +8,11 @@
 authconfig --enableshadow --passalgo=md5
 keyboard us
 lang en_US
-timezone --utc Asia/Shanghai
-liveimg --url=http://10.66.10.22:8090/rhevh/rhevh7-ng-36/rhev-hypervisor7-ng-3.6-20160506.0/rhev-hypervisor7-ng-3.6-20160506.0.x86_64.liveimg.squashfs
+timezone --utc {timezone_utc}
+liveimg --url={liveimg}
 
 bootloader --location=mbr
-rootpw --plaintext redhat
+rootpw --plaintext {rootpassword}
 
 #network --device=ens3 --bootproto=static --ip=192.168.10.3 --netmask=255.255.255.0 --gateway=192.168.10.1
 network --device=ens3 --bootproto=dhcp
@@ -29,7 +29,6 @@ logvol swap --vgname=testgroup --thin --size=2048 --name=swap --fstype=swap --po
 logvol /home --vgname=testgroup --thin --size=80000 --fstype=xfs --name=home --poolname=ngn_pool
 
 text
-reboot
 
 %post --erroronfail
 imgbase layout --init
@@ -37,5 +36,7 @@ imgbase --experimental volume --create /var 4G
 %end
 
 %post --nochroot
-curl -s http://10.66.9.216:5000/done/dell-per510-01.lab.eng.pek2.redhat.com
+curl -s http://{srv_ip}:{srv_port}/done/{bkr_name}
 %end
+
+reboot

@@ -7,12 +7,15 @@
 authconfig --enableshadow --passalgo=md5
 keyboard us
 lang en_US
-timezone --utc Asia/Shanghai
-liveimg --url=http://10.66.65.30/rhevh/rhev-hypervisor7-ng-3.6-20160429.0.x86_64.liveimg.squashfs
+timezone --utc {timezone_utc}
+liveimg --url={liveimg}
 
 bootloader --location=mbr
-rootpw --plaintext redhat
-network --device=ens3 --bootproto=static --ip=192.168.10.3 --netmask=255.255.255.0 --gateway=192.168.10.1
+rootpw --plaintext {rootpassword}
+
+# focus on storage parts, so use dhcp for network
+# network --device=ens3 --bootproto=static --ip=192.168.10.3 --netmask=255.255.255.0 --gateway=192.168.10.1
+network --device=ens3 --bootproto=dhcp
 
 clearpart --all
 part pv.01 --size=100000 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000022
@@ -26,8 +29,15 @@ logvol swap --vgname=testgroup --thin --size=2048 --name=swap --fstype=swap --po
 logvol /home --vgname=testgroup --thin --size=80000 --fstype=xfs --name=home --poolname=ngn_pool
 
 text
+
 %post --erroronfail
 imgbase layout --init
 imgbase --experimental volume --create /var 4G
 %end
+
+%post --nochroot
+curl -s http://{srv_ip}:{srv_port}/done/{bkr_name}
+%end
+
 reboot
+

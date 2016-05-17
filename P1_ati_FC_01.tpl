@@ -8,11 +8,12 @@
 authconfig --enableshadow --passalgo=md5
 keyboard us
 lang en_US
-timezone --utc Asia/Shanghai
+#timezone --utc Asia/Shanghai
+timezone --utc {timezone_utc}
 liveimg --url={liveimg}
 
 bootloader --location=mbr
-rootpw --plaintext redhat
+rootpw --plaintext {rootpassword}
 
 #network --device=ens3 --bootproto=static --ip=192.168.10.3 --netmask=255.255.255.0 --gateway=192.168.10.1
 network --device=ens3 --bootproto=dhcp
@@ -29,7 +30,6 @@ logvol swap --vgname=testgroup --thin --size=2048 --name=swap --fstype=swap --po
 logvol /home --vgname=testgroup --thin --size=80000 --fstype=xfs --name=home --poolname=ngn_pool
 
 text
-reboot
 
 %post --erroronfail
 imgbase layout --init
@@ -39,3 +39,5 @@ imgbase --experimental volume --create /var 4G
 %post --nochroot
 curl -s http://{srv_ip}:{srv_port}/done/{bkr_name}
 %end
+
+reboot
