@@ -8,12 +8,14 @@
 authconfig --enableshadow --passalgo=md5
 keyboard us
 lang en_US
-timezone --utc Asia/Shanghai
-liveimg --url=http://10.66.65.30/rhevh/rhev-hypervisor7-ng-3.6-20160429.0.x86_64.liveimg.squashfs
+timezone --utc {timezone_utc}
+liveimg --url={liveimg}
 
 bootloader --location=mbr
-rootpw --plaintext redhat
-network --device=ens3 --bootproto=static --ip=192.168.10.3 --netmask=255.255.255.0 --gateway=192.168.10.1
+rootpw --plaintext {rootpassword}
+
+#network --device=ens3 --bootproto=static --ip=192.168.10.3 --netmask=255.255.255.0 --gateway=192.168.10.1
+network --device=ens3 --bootproto=dhcp
 
 clearpart --all
 part / --fstype=ext4 --size=43000 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000022
@@ -23,4 +25,9 @@ part /home --fstype=ext4 --size=140504 --ondisk=/dev/disk/by-id/scsi-36005076300
 
 
 text
+
+%post --nochroot
+curl -s http://{srv_ip}:{srv_port}/done/{bkr_name}
+%end
+
 reboot

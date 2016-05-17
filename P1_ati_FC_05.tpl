@@ -1,23 +1,26 @@
 # The kickstart file will perform
 
 # 1. a unattended installation
-# 2. set /|swap|home|boot to FC disk in lvm
-# 3. using machine `dell-per510-01`
+# 2. set boot partition to local disk
+# 3. set two FC disks for lvm
+# 4. set /home|/|swap to FC disks in lvm
+# 5. using machine `dell-per510-01`
 
 authconfig --enableshadow --passalgo=md5
 keyboard us
 lang en_US
-timezone --utc Asia/Shanghai
-liveimg --url=http://10.66.65.30/rhevh/rhev-hypervisor7-ng-3.6-20160429.0.x86_64.liveimg.squashfs
+timezone --utc {timezone_utc}
+liveimg --url={liveimg}
 
 bootloader --location=mbr
-rootpw --plaintext redhat
-network --device=ens3 --bootproto=static --ip=192.168.10.3 --netmask=255.255.255.0 --gateway=192.168.10.1
+rootpw --plaintext {rootpassword}
+#network --device=ens3 --bootproto=static --ip=192.168.10.3 --netmask=255.255.255.0 --gateway=192.168.10.1
+network --device=ens3 --bootproto=dhcp
 
 clearpart --all
 part pv.01 --size=100000 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000022
-part pv.02 --size=50000 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000022
-part /boot --size=10000 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000022
+part pv.02 --size=50000 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000023
+part /boot --size=10000 --ondisk=/dev/disk/by-id/scsi-36782bcb03cdfa200174636ff055184dc
 volgroup testgroup pv.01 pv.02
 
 logvol none --vgname=testgroup --thinpool --name=ngn_pool --size=120000
@@ -30,4 +33,9 @@ text
 imgbase layout --init
 imgbase --experimental volume --create /var 4G
 %end
+
+%post --nochroot
+curl -s http://{srv_ip}:{srv_port}/done/{bkr_name}
+%end
+
 reboot
