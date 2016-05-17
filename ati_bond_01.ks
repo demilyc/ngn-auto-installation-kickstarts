@@ -2,20 +2,20 @@
 
 # 1. a unattended installation
 # 2. set network device is `bond00` in mode `balance-rr`
-# weiwang <weiwang@redhat.com>
+# 3. use dell-op790-01
 
-authconfig --enableshadow --passalgo=md5
+authconfig --enableshadow --passalgo=sha512
 keyboard us
 lang en_US
 timezone --utc Asia/Shanghai
-liveimg --url=http://10.66.65.30/rhevh/ovirt-node-ng-image.squashfs.img
+liveimg --url=http://10.66.65.30/ovirt-node/ovirt-node-ng-image.squashfs.img
 bootloader --location=mbr
 rootpw --plaintext redhat
-network --device=bond00 --bondslaves=ens3,ens4 --bondopts=mode=balance-rr,miimon=100 --bootproto=static --ip=192.168.10.3 --netmask=255.255.255.0 --gateway=192.168.10.1
+network --device=bond00 --bondslaves=em1,p4p2 --bondopts=mode=balance-rr,miimon=100 --bootproto=dhcp --onboot=yes
+user --name=node --password=123qweP --plaintext
 clearpart --all
 autopart --type=thinp
 text
-user --name=node --password=123qweP --plaintext
 %post --erroronfail
 imgbase layout --init
 imgbase --experimental volume --create /var 4G
