@@ -17,7 +17,7 @@ network --device=ens3 --bootproto=static --ip=192.168.10.3 --netmask=255.255.255
 
 clearpart --all
 part / --fstype=ext4 --size=43000 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000022
-part /boot --fstype=ext4 --size=43000 --ondisk=/dev/disk/by-id/scsi-36782bcb03cdfa200174636ff055184dc
+part /boot --fstype=ext4 --size=43000 --ondisk=/dev/disk/by-id/scsi-36782bcb03cdfa2001ebc7e930f1ca244
 part swap --fstype=swap --size=6000 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000022
 part /home --fstype=ext4 --size=140504 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000022
 
