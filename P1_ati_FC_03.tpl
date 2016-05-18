@@ -19,7 +19,7 @@ network --device=ens3 --bootproto=dhcp
 
 clearpart --all
 part / --fstype=ext4 --size=43000 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000022
-part /boot --fstype=ext4 --size=43000 --ondisk=/dev/disk/by-id/scsi-36782bcb03cdfa200174636ff055184dc
+part /boot --fstype=ext4 --size=43000 --ondisk=/dev/disk/by-id/scsi-36782bcb03cdfa2001ebc7e930f1ca244
 part swap --fstype=swap --size=6000 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000022
 part /home --fstype=ext4 --size=140504 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000022
 

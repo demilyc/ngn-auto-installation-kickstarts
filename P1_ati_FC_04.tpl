@@ -21,7 +21,7 @@ clearpart --all
 
 # xfs instead of ext4 - ycui modified on auto branch.
 part / --fstype=xfs --size=43000 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000022
-part /boot --fstype=xfs --size=43000 --ondisk=/dev/disk/by-id/scsi-36782bcb03cdfa200174636ff055184dc
+part /boot --fstype=xfs --size=43000 --ondisk=/dev/disk/by-id/scsi-36782bcb03cdfa2001ebc7e930f1ca244
 part swap --fstype=swap --size=6000 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000022
 part /home --fstype=xfs --size=80504 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000023
 

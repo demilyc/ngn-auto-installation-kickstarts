@@ -20,7 +20,7 @@ network --device=ens3 --bootproto=dhcp
 clearpart --all
 part pv.01 --size=100000 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000022
 part pv.02 --size=50000 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000023
-part /boot --size=10000 --ondisk=/dev/disk/by-id/scsi-36782bcb03cdfa200174636ff055184dc
+part /boot --size=10000 --ondisk=/dev/disk/by-id/scsi-36782bcb03cdfa2001ebc7e930f1ca244
 volgroup testgroup pv.01 pv.02
 
 logvol none --vgname=testgroup --thinpool --name=ngn_pool --size=120000
