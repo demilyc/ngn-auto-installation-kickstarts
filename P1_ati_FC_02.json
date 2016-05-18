@@ -1,10 +1,10 @@
 {
-    "timezone_utc": "",
-    "rootpassword": "",
+    "timezone_utc": "Asia/Shanghai",
+    "rootpassword": "redhat",
     "liveimg": "",
     "srv_ip": "",
     "srv_port": "",
-    "bkr_name": "",
+    "bkr_name": "dell-per510-01.lab.eng.pek2.redhat.com",
 
     "MACHINES": [
         "dell-per510-01.lab.eng.pek2.redhat.com"

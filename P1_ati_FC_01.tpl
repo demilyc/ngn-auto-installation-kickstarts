@@ -8,7 +8,7 @@
 authconfig --enableshadow --passalgo=md5
 keyboard us
 lang en_US
-#timezone --utc Asia/Shanghai
+
 timezone --utc {timezone_utc}
 liveimg --url={liveimg}
 
