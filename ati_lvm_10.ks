@@ -1,9 +1,9 @@
 # The kickstart file will perform
 
 # 1. a unattended installation
-# 2. set volgroup name to `testgroup`
-# 3. set a lvm thinp 
-# 4. set /|swap|/home to thin
+# 2. two disk sda and adb, sda(lvm) for rhevh installation; sdb(plain) for swap partition
+# 3. set volgroup name to `testgroup`
+# 4. set thinp for storage 
 
 #Authconfig
 authconfig --enableshadow --passalgo=sha512
