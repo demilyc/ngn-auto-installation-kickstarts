@@ -3,7 +3,6 @@
 # 1. a unattended installation
 # 2. set volgroup name to `testgroup`
 # 3. set logvol /|/swap|/data
-# 4. imgbase layout raise meaningful error without thinp
 
 authconfig --enableshadow --passalgo=md5
 keyboard us
@@ -25,9 +24,12 @@ logvol / --vgname=testgroup --size=43000 --name=root
 logvol swap --vgname=testgroup --size=1024 --name=swap
 logvol /data --vgname=testgroup --size=43000 --name=data
 
-%post --erroronfail
-imgbase layout --init
-imgbase --experimental volume --create /var 1G
+%pre --log=/tmp/pre-install.log
+echo "imgbase create on storage lvm"
+%end
+
+%post --nochroot --log=/mnt/sysimage/root/post-install.log
+cp -v /tmp/pre-install.log /mnt/sysimage/root
 %end
 
 text
