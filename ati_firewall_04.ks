@@ -1,21 +1,30 @@
-# The kickstart file will perform
-
-# 1. a unattended installation
-# 2. set firewall enable ssh
-
-authconfig --enableshadow --passalgo=md5
-keyboard us
-lang en_US
-timezone --utc Asia/Shanghai
-liveimg --url=http://10.66.65.30/rhevh/ovirt-node-ng-image.squashfs.img
-bootloader --location=mbr
+#version=DEVEL
+# Keyboard layouts
+keyboard 'us'
+# Root password
 rootpw --plaintext redhat
-network --device=ens3 --bootproto=static --ip=192.168.10.3 --netmask=255.255.255.0 --gateway=192.168.10.1
-clearpart --all
+# System language
+lang en_US
+# Use live disk image installation
+liveimg --url="http://10.66.65.30/rhevh/ovirt-node-ng-image.squashfs.img"
+# Firewall configuration
+firewall --enabled --service=ssh
+# Network information
+network  --bootproto=static --device=ens3 --gateway=192.168.10.1 --ip=192.168.10.3 --netmask=255.255.255.0
+# Reboot after installation
+reboot
+# System timezone
+timezone Asia/Shanghai --isUtc
+# System authorization information
+auth --enableshadow --passalgo=md5
+
+# System bootloader configuration
+bootloader --location=mbr
 autopart --type=thinp
-firewall --enabled --ssh
+# Partition clearing information
+clearpart --all
+
 %post --erroronfail
 imgbase layout --init
 imgbase --experimental volume --create /var 4G
 %end
-reboot

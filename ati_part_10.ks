@@ -1,24 +1,27 @@
-# The kickstart file will perform
-
-# 1. a unattended installation
-# 2. set patition /|/boot|/swap|/data|/config|/logging
-# 3. set onpart to `redhat`
-# 4. set resize enable
-
-authconfig --enableshadow --passalgo=md5
-keyboard us
-lang en_US
-timezone --utc Asia/Shanghai
-liveimg --url=http://10.66.65.30/rhevh/ovirt-node-ng-image.squashfs.img
-
-bootloader --location=mbr
+#version=DEVEL
+# Keyboard layouts
+keyboard 'us'
+# Root password
 rootpw --plaintext redhat
-network --device=ens3 --bootproto=static --ip=192.168.10.3 --netmask=255.255.255.0 --gateway=192.168.10.1
-
-clearpart --list=/dev/sda1,/dev/sda2,/dev/sda3,/dev/sda5,/dev/sda6
-part / --fstype=xfs --size=4300 --ondisk=/dev/sda
-part /boot --fstype=xfs --size=4300 --ondisk=/dev/sda
-part swap --fstype=swap --recommended --ondisk=/dev/sda
-part /data --fstype=xfs --size=18000 --ondisk=/dev/sda --onpart=LABEL=redhat --resize
-
+# System language
+lang en_US
+# Use live disk image installation
+liveimg --url="http://10.66.65.30/rhevh/ovirt-node-ng-image.squashfs.img"
+# Network information
+network  --bootproto=static --device=ens3 --gateway=192.168.10.1 --ip=192.168.10.3 --netmask=255.255.255.0
+# Reboot after installation
 reboot
+# System timezone
+timezone Asia/Shanghai --isUtc
+# System authorization information
+auth --enableshadow --passalgo=md5
+
+# System bootloader configuration
+bootloader --location=mbr
+# Partition clearing information
+clearpart --list=/dev/sda1,/dev/sda2,/dev/sda3,/dev/sda5,/dev/sda6
+# Disk partitioning information
+part / --fstype="xfs" --ondisk=/dev/sda --size=4300
+part /boot --fstype="xfs" --ondisk=/dev/sda --size=4300
+part swap --fstype="swap" --ondisk=/dev/sda --recommended
+part /data --fstype="xfs" --ondisk=/dev/sda --onpart=LABEL=redhat --size=18000 --resize
