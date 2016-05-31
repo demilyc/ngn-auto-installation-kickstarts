@@ -32,7 +32,7 @@ rootpw --plaintext redhat
 network --device=ens3 --bootproto=dhcp
 
 #Clear partitions before disk part
-clearpart --all --initlable --disklabel=gpt
+clearpart --all --initlabel --disklabel=gpt
 
 #Create biosboot
 #part biosboot --size=1 --fstype=biosboot --ondisk=/dev/disk/by-id/ata-TEAC_DVD-ROM_DV-28SW_11043021053931
