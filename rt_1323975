@@ -1,26 +1,29 @@
-# Minimal kickstart
-
-liveimg --url=http://10.66.65.30/ovirt-node/ovirt-node-ng-image.squashfs.img
-
-clearpart --all
-
-autopart --type=thinp
-
+#version=DEVEL
+# Root password
 rootpw --plaintext redhat
-
-timezone --utc Asia/Harbin
-
-
-firewall --service=ssh
-services --enabled=sshd
-
-zerombr
-
+# Use live disk image installation
+liveimg --url="http://10.66.65.30/ovirt-node/ovirt-node-ng-image.squashfs.img"
+# Firewall configuration
+firewall --enabled --service=ssh
+# Reboot after installation
+reboot
+# System timezone
+timezone Asia/Harbin --isUtc
+# Use text mode install
 text
 
-reboot
+# System services
+services --enabled="sshd"
+# System bootloader configuration
+bootloader --location=none
+autopart --type=thinp
+# Clear the Master Boot Record
+zerombr
+# Partition clearing information
+clearpart --all
 
 %post --erroronfail
 imgbase layout --init
 imgbase --experimental volume --create /var 4G
 %end
+
