@@ -1,35 +1,38 @@
-# The kickstart file will perform
-
-# 1. a unattended installation
-# 2. set boot partition to local disk
-# 3. set two FC disks for lvm
-# 4. set /home|/|swap to FC disks in lvm
-# 5. using machine `dell-per510-01`
-
-authconfig --enableshadow --passalgo=md5
-keyboard us
-lang en_US
-timezone --utc Asia/Shanghai
-liveimg --url=http://10.66.65.30/rhevh/rhev-hypervisor7-ng-3.6-20160429.0.x86_64.liveimg.squashfs
-
-bootloader --location=mbr
+#version=DEVEL
+# Keyboard layouts
+keyboard 'us'
+# Root password
 rootpw --plaintext redhat
-network --device=ens3 --bootproto=static --ip=192.168.10.3 --netmask=255.255.255.0 --gateway=192.168.10.1
-
-clearpart --all
-part pv.01 --size=100000 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000022
-part pv.02 --size=50000 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000023
-part /boot --size=10000 --ondisk=/dev/disk/by-id/scsi-36782bcb03cdfa2001ebc7e930f1ca244
-volgroup testgroup pv.01 pv.02
-
-logvol none --vgname=testgroup --thinpool --name=ngn_pool --size=120000
-logvol / --vgname=testgroup --thin --size=30000 --fstype=ext3 --name=root --poolname=ngn_pool
-logvol swap --vgname=testgroup --thin --size=2048 --name=swap --fstype=swap --poolname=ngn_pool
-logvol /home --vgname=testgroup --thin --size=80000 --fstype=xfs --name=home --poolname=ngn_pool
-
+# System language
+lang en_US
+# Use live disk image installation
+liveimg --url="http://10.66.65.30/rhevh/rhev-hypervisor7-ng-3.6-20160429.0.x86_64.liveimg.squashfs"
+# Network information
+network  --bootproto=static --device=ens3 --gateway=192.168.10.1 --ip=192.168.10.3 --netmask=255.255.255.0
+# Reboot after installation
+reboot
+# System timezone
+timezone Asia/Shanghai --isUtc
+# System authorization information
+auth --enableshadow --passalgo=md5
+# Use text mode install
 text
+
+# System bootloader configuration
+bootloader --location=mbr
+# Partition clearing information
+clearpart --all
+# Disk partitioning information
+part pv.01 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000022 --size=100000
+part pv.02 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000023 --size=50000
+part /boot --ondisk=/dev/disk/by-id/scsi-36782bcb03cdfa2001ebc7e930f1ca244 --size=10000
+volgroup testgroup pv.01 pv.02
+logvol none  --size=120000 --thinpool --name=ngn_pool --vgname=testgroup
+logvol /  --fstype="ext3" --size=30000 --thin --poolname=ngn_pool --name=root --vgname=testgroup
+logvol swap  --fstype="swap" --size=2048 --thin --poolname=ngn_pool --name=swap --vgname=testgroup
+logvol /home  --fstype="xfs" --size=80000 --thin --poolname=ngn_pool --name=home --vgname=testgroup
+
 %post --erroronfail
 imgbase layout --init
 imgbase --experimental volume --create /var 4G
 %end
-reboot

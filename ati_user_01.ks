@@ -1,49 +1,31 @@
-# The kickstart file will perform
-
-# 1. a unattended installation
-# 2. set user `weiwang`
-# weiwang <weiwang@redhat.com>
-
-#Authconfig set
-authconfig --enableshadow --passalgo=md5
-
-#Keyboard type set
-keyboard us
-
-#Default language set
-lang en_US
-
-#System time zone set
-timezone --utc Asia/Shanghai
-
-#Install image url set
-liveimg --url=http://10.66.65.30/rhevh/rhev-hypervisor7-ng-3.6-20160426.0.x86_64.liveimg.squashfs
-
-#Bootloader location set
-bootloader --location=mbr
-
-#Root password set
+#version=DEVEL
+# Keyboard layouts
+keyboard 'us'
+# Root password
 rootpw --plaintext redhat
+# System language
+lang en_US
+# Use live disk image installation
+liveimg --url="http://10.66.65.30/rhevh/rhev-hypervisor7-ng-3.6-20160426.0.x86_64.liveimg.squashfs"
+user --name=weiwang --password=qweasd
+# Network information
+network  --bootproto=static --device=ens3 --gateway=192.168.10.1 --ip=192.168.10.3 --netmask=255.255.255.0
+# Reboot after installation
+reboot
+# System timezone
+timezone Asia/Shanghai --isUtc
+# System authorization information
+auth --enableshadow --passalgo=md5
+# Use text mode install
+text
 
-#Network set `static`
-network --device=ens3 --bootproto=static --ip=192.168.10.3 --netmask=255.255.255.0 --gateway=192.168.10.1
-
-#Clear partitions before disk part
-clearpart --all
-
-#Auto partition in thinp mode
+# System bootloader configuration
+bootloader --location=mbr
 autopart --type=thinp
-
-#Add a user
-user --name=weiwang --password=qweasd --plaintext
+# Partition clearing information
+clearpart --all
 
 %post --erroronfail
 imgbase layout --init
 imgbase --experimental volume --create /var 4G
 %end
-
-#Text mode for installer
-text
-
-#Reboot system after install
-reboot

@@ -1,58 +1,40 @@
-# The kickstart file will perform
-
-# 1. a unattended installation
-# 2. set UEFI mode in machine
-# 3. set /boot|/boot/efi in thinp mode
-# 4. using machine `dell-per210-01`
-
-#Authconfig set
-authconfig --enableshadow --passalgo=md5
-
-#Keyboard type set
-keyboard us
-
-#Default language set
-lang en_US
-
-#System time zone set
-timezone --utc Asia/Shanghai
-
-#Install image url set
-liveimg --url=http://10.66.65.30/rhevh/rhev-hypervisor7-ng-3.6-20160426.0.x86_64.liveimg.squashfs
-
-#Bootloader location set
-bootloader --location=mbr
-
-#Root password set
+#version=DEVEL
+# Keyboard layouts
+keyboard 'us'
+# Root password
 rootpw --plaintext redhat
+# System language
+lang en_US
+# Use live disk image installation
+liveimg --url="http://10.66.65.30/rhevh/rhev-hypervisor7-ng-3.6-20160426.0.x86_64.liveimg.squashfs"
+# Network information
+network  --bootproto=dhcp --device=ens3
+# Reboot after installation
+reboot
+# System timezone
+timezone Asia/Shanghai --isUtc
+# System authorization information
+auth --enableshadow --passalgo=md5
+# Use text mode install
+text
 
-#Network set `dhcp`
-network --device=ens3 --bootproto=dhcp
-
-#Clear partitions before disk part
+# System bootloader configuration
+bootloader --location=mbr
+# Partition clearing information
 clearpart --all
-
-#Create biosboot
-part biosboot --size=1 --fstype=biosboot --ondisk=/dev/disk/by-id/ata-TEAC_DVD-ROM_DV-28SW_11043021053931
-part /boot --fstype=xfs --size=2000 --ondisk=/dev/disk/by-id/ata-TEAC_DVD-ROM_DV-28SW_11043021053931
-part /boot/efi --fstype=efi --size=2000 --ondisk=/dev/disk/by-id/ata-TEAC_DVD-ROM_DV-28SW_11043021053931
-
-
-part pv.01 --size=10000 --ondisk=/dev/disk/by-id/ata-TEAC_DVD-ROM_DV-28SW_11043021053931
-part pv.02 --size=15000 --ondisk=/dev/disk/by-id/ata-TEAC_DVD-ROM_DV-28SW_11043021053931
+# Disk partitioning information
+part biosboot --fstype="biosboot" --ondisk=/dev/disk/by-id/ata-TEAC_DVD-ROM_DV-28SW_11043021053931 --size=1
+part /boot --fstype="xfs" --ondisk=/dev/disk/by-id/ata-TEAC_DVD-ROM_DV-28SW_11043021053931 --size=2000
+part /boot/efi --fstype="efi" --ondisk=/dev/disk/by-id/ata-TEAC_DVD-ROM_DV-28SW_11043021053931 --size=2000
+part pv.01 --ondisk=/dev/disk/by-id/ata-TEAC_DVD-ROM_DV-28SW_11043021053931 --size=10000
+part pv.02 --ondisk=/dev/disk/by-id/ata-TEAC_DVD-ROM_DV-28SW_11043021053931 --size=15000
 volgroup testgroup pv.01 pv.02
-
-logvol none --vgname=testgroup --thinpool --name=ngn_pool --size=20000
-logvol / --vgname=testgroup --thin --size=6000 --fstype=xfs --name=root --poolname=ngn_pool
-logvol swap --vgname=testgroup --thin --size=2048 --name=swap --fstype=swap --poolname=ngn_pool
-logvol /home --vgname=testgroup --thin --size=9000 --fstype=xfs --name=home --poolname=ngn_pool
+logvol none  --size=20000 --thinpool --name=ngn_pool --vgname=testgroup
+logvol /  --fstype="xfs" --size=6000 --thin --poolname=ngn_pool --name=root --vgname=testgroup
+logvol swap  --fstype="swap" --size=2048 --thin --poolname=ngn_pool --name=swap --vgname=testgroup
+logvol /home  --fstype="xfs" --size=9000 --thin --poolname=ngn_pool --name=home --vgname=testgroup
 
 %post --erroronfail
 imgbase layout --init
 imgbase --experimental volume --create /var 4G
 %end
-
-text
-
-#Reboot system after install
-reboot
