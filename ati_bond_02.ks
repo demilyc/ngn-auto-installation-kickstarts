@@ -9,7 +9,7 @@ lang en_US
 liveimg --url="http://10.66.65.30/rhevh/ovirt-node-ng-image.squashfs.img"
 user --name=node --password=123qweP
 # Network information
-network  --bootproto=dhcp --device=bond01 --bondslaves=em1,p4p2 --bondopts=mode=active-backup miimon=1000
+network  --bootproto=dhcp --device=bond01 --bondslaves=em1,p4p2 --bondopts=mode=active-backup,miimon=1000
 # Reboot after installation
 reboot
 # System timezone
