@@ -1,7 +1,8 @@
 # The kickstart file will perform
 
 # 1. a unattended installation
-# 2. set partition as autopart with thinp type
+# 2. auto part with reqpart
+# 3. check point 2 partition /boot and /
 
 #version=DEVEL
 # Keyboard layouts
