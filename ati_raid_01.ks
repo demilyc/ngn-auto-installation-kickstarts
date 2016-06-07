@@ -1,3 +1,9 @@
+# The kickstart file will perform
+
+# 1. a unattended installation
+# 2. set all partition in thinp mode
+# 3. using machine `dell-per515-01`, firmware raid.
+
 #version=DEVEL
 # Keyboard layouts
 keyboard 'us'
@@ -20,17 +26,9 @@ text
 
 # System bootloader configuration
 bootloader --location=mbr
+autopart --type=thinp --fstype=xfs
 # Partition clearing information
 clearpart --all
-# Disk partitioning information
-part pv.01 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000022 --size=100000
-part pv.02 --ondisk=/dev/disk/by-id/scsi-36005076300810b3e0000000000000022 --size=50000
-part /boot --ondisk=/dev/disk/by-id/scsi-36782bcb03cdfa200174636ff055184dc --size=10000
-volgroup testgroup pv.01 pv.02
-logvol none  --size=120000 --thinpool --name=ngn_pool --vgname=testgroup
-logvol /  --fstype="ext3" --size=30000 --thin --poolname=ngn_pool --name=root --vgname=testgroup
-logvol swap  --fstype="swap" --size=2048 --thin --poolname=ngn_pool --name=swap --vgname=testgroup
-logvol /home  --fstype="xfs" --size=80000 --thin --poolname=ngn_pool --name=home --vgname=testgroup
 
 %post --erroronfail
 imgbase layout --init
